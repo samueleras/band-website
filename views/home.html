@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer async src="bandScript.js"></script>
+    <title>Band Template</title>
+</head>
+
+<body>
+
+    <div class="flexcontainer-navbar" data-visible="false">
+
+        <div class="flexcontainer-navbar-links">
+            <a href="">HOME</a>
+            <a href="">BAND</a>
+            <a href="">TOUR</a>
+            <a href="">CONTACT</a>
+            <div class="more-dropdown">MORE <i class="glyphicon glyphicon-triangle-bottom"></i>
+                <div class="more-dropdown-content">
+                    <a href="#">MERCHANDISE</a>
+                    <a href="#">EXTRAS</a>
+                    <a href="#">MEDIA</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="menu-button"><i class="glyphicon glyphicon-th"></i></button>
+    <button class="search-button"><i class="glyphicon glyphicon-search"></i></button>
+    <button class="x-button"><i class="glyphicon glyphicon-remove"></i></button>
+
+    <div class="headerIMG">
+        <div id="headerIMG1">
+            <img class="imgChicago" src="./images/chicago.jpg" alt="Chicago" width="100%">
+            <div class="imgTitle">Chicago</div>
+            <div class="imgDesc">Thank you, Chicago - A night we won't forget</div>
+        </div>
+        <div id="headerIMG2">
+            <img class="imgChicago" src="ny.jpg" alt="New York" width="100%">
+            <div class="imgTitle">New York</div>
+            <div class="imgDesc">Thank you, New York - A night we won't forget</div>
+        </div>
+        <div id="headerIMG3">
+            <img class="imgChicago" src="la.jpg" alt="Los Angeles" width="100%">
+            <div class="imgTitle">Los Angeles</div>
+            <div class="imgDesc">Thank you, Los Angeles - A night we won't forget</div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="section">
+            <h1>THE BAND</h1>
+            <p class="subheading">We love music</p>
+            <p class="blocktext">We have created a fictional band website. Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                reprehenderit
+                in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed
+                do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <!-- Grid???-->
+            <div class="flexcontainer-theband">
+                <div>
+                    <p>Name1</p>
+                    <div><img src="bandmember.jpg" alt="bandmember" width="90%"></div>
+                </div>
+                <div>
+                    <p>Name2</p>
+                    <div><img src="bandmember.jpg" alt="bandmember" width="90%"></div>
+                </div>
+                <div>
+                    <p>Name3</p>
+                    <div><img src="bandmember.jpg" alt="bandmember" width="90%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row tourdates">
+        <div class="section">
+            <h1>TOUR DATES</h1>
+            <p class="subheading">Remember to book your tickets!</p>
+
+            <div class="flexcontainer-availabilty">
+                <div>September</div>
+                <div class="soldout">Sold out</div>
+            </div>
+            <div class="flexcontainer-availabilty">
+                <div>October</div>
+                <div class="soldout">Sold out</div>
+            </div>
+            <div class="flexcontainer-availabilty shopping">
+                <div>November</div>
+                <div style="margin: 0;" class="shopping-button"><i class="glyphicon glyphicon-shopping-cart"></i></div>
+            </div>
+
+            <div class="flexcontainer-orte">
+                <div>
+                    <img class="ny1" src="ny1.jpg" alt="NewYork" width="100%">
+                    <div class="orte-desc">
+                        <h3>New York</h3>
+                        <p>Fri 27 Nov 2023</p>
+                        <p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                        <button>Buy Tickets</button>
+                    </div>
+                </div>
+                <div>
+                    <img class="paris1" src="paris1.jpg" alt="Paris" width="100%">
+                    <div class="orte-desc">
+                        <h3>Paris</h3>
+                        <p>Sat 28 Nov 2023</p>
+                        <p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                        <button>Buy Tickets</button>
+                    </div>
+                </div>
+                <div>
+                    <img class="sf1" src="sf1.jpg" alt="SanFrancisco" width="100%">
+                    <div class="orte-desc">
+                        <h3>San Francisco</h3>
+                        <p>Sun 29 Nov 2023</p>
+                        <p>Praesent tincidunt sed tellus ut rutrum sed vitae justo.</p>
+                        <button>Buy Tickets</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="section">
+            <h1>CONTACT</h1>
+            <p class="subheading">Fan? Drop a note!</p>
+
+            <div class="formular">
+                <!-- Anfang Formular -->
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <div class="grid-container-form">
+                        <div class="grid-item item1">
+                            <div class="map-icon"><i class="glyphicon glyphicon-map-marker"> Chicago, US</i></div>
+                            <div class="phone-icon"><i class="glyphicon glyphicon-earphone"> Phone: 00 151515</i></div>
+                            <div class="email-icon"><i class="glyphicon glyphicon-envelope"> Email: mail@mail.com</i>
+                            </div>
+                        </div>
+                        <input class="grid-item item2" type="text" id="name" name="name" placeholder="Name">
+
+                        <input class="grid-item item3" type="email" id="email" name="email" placeholder="Email">
+
+                        <input class="grid-item item4" type="text" id="message" name="message" placeholder="Message">
+
+                    </div>
+                    <input class="sendbutton" type="submit" value="SEND">
+
+                </form> <!-- Formular Ende -->
+            </div>
+
+        </div>
+    </div>
+
+    <img class="map-image" src="map.jpg" alt="Map" width="100%">
+
+    <div class="row">
+        <div class="section">
+            <p class="subheading">... Links ...</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
