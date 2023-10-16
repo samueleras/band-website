@@ -1,6 +1,6 @@
 # band-website
 
-This is a template-website for a band running on Node.
+This is a template-website for bands running on Node.
 
 Desktop view:
 
