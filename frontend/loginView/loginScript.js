@@ -44,22 +44,16 @@ formsignup.addEventListener("submit", async (e) => {
 
 
     if (await validateInputsSignUp()) {
-        //Fetch POST, write username and password to file on server, create file if not exists
 
-/*         let response = await fetch('/login/checkLogin', {
+        //write username and password to file on server
+        await fetch('/login/createUser', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "session": sessionId })
+            body: JSON.stringify({ "username": newusernameValue, "password": newpasswordValue})
         })
-    
-        response = await response.json();
-        
-        if(response.name == "false"){
-            location.href = '/login';
-        } */
 
         location.href = '/login';
     }
@@ -115,10 +109,6 @@ const validateInputsSignUp = async () => {
 //Prüfe Name bei Signup
 async function checkNameSignup() {
 
-    //Fetch POST username, return true or false to indicate if username is available or not, if no file exists, return available
-
-    console.log("test");
-
     let response = await fetch('/login/checkUsername', {
         method: 'POST',
         headers: {
@@ -133,23 +123,7 @@ async function checkNameSignup() {
     if(response.user == "false"){
         return false;
     }
-
-
-    /*     let text = await readLoginFile();
-    
-        const rowData = text.split('\n');
-    
-        for (let row = 1; row < rowData.length; row++) {
-    
-            const rowColData = rowData[row].split(',');
-    
-            if (rowColData[0].trim() == newusernameValue) {
-                return false;
-            }
-        } */
-
     return true;
-
 }
 
 

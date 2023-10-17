@@ -16,11 +16,6 @@ const server = http.createServer((req, res) => {
         //HOME SEITE
         case '/':                                       //HTML
             path += 'homeView/home.html';
-            //TODO
-            /* if(notLoggedIn){
-                res.setHeader('Location', 'login');
-                res.end();
-            } */
             break;
         case '/style':                                  //CSS
             res.writeHead(200, {
@@ -99,6 +94,8 @@ const server = http.createServer((req, res) => {
             });
             path += 'loginView/loginScript.js';
             break;
+
+        //Check if login credentials are valid or if the sessionId of a running session is valid
         case '/login/checkLogin':
             res.writeHead(200, {
                 "Content-Type": "application/json"
@@ -138,8 +135,9 @@ const server = http.createServer((req, res) => {
                     console.log(err);
                 }
             });
-
             return;
+
+        //Check if username is available for registration
         case '/login/checkUsername':
             res.writeHead(200, {
                 "Content-Type": "application/json"
@@ -174,6 +172,25 @@ const server = http.createServer((req, res) => {
                     console.log(err);
                 }
             });
+            break;
+
+        //Create User with valid Signup Credentials
+        case '/login/createUser':
+
+            req.on('data', (postData) => {
+                postData = JSON.parse(postData);
+
+                fs.appendFile('./login.txt', `${postData.username},${postData.password}\n`, (err) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("user written into file");
+                    }
+                });
+            });
+
+            res.end();
+            return;
 
         //404 SEITE
         default:
