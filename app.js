@@ -2,6 +2,7 @@
 
 const http = require('http');
 const fs = require('fs');
+const {v4: uuid} = require('uuid');
 
 const server = http.createServer((req, res) => {
 
@@ -98,6 +99,37 @@ const server = http.createServer((req, res) => {
             });
             path += 'loginView/loginScript.js';
             break;
+        case '/login/checkLogin':
+            res.writeHead(200, {
+                "Content-Type": "application/json"
+            });
+
+            req.on('data', (postData) => {
+                postData = JSON.parse(postData);
+
+                let text = readFile("login.txt");
+
+                let data = "";
+
+                if(typeof postData.user !== 'undefined'){
+                    if (checkCredentials(text, postData)) {
+                        data = JSON.stringify({ "id": uuid(), "login": "true" });
+
+                        //TODO Write uuid into a file. extra file or login....?
+
+                    } else {
+                        data = JSON.stringify({ "login": "false" });
+                    }
+                } else if(typeof postData.session !== 'undefined') {
+                    if(checkSession(postData)){
+                        data = JSON.stringify({ "login": "true" });
+                    };
+                }
+
+                res.end(data);
+            });
+
+            return;
 
         //404 SEITE
         default:
@@ -120,6 +152,33 @@ const server = http.createServer((req, res) => {
 server.listen(3000, 'localhost', () => {
     console.log("Listening for requests on port 3000")
 });
+
+const readFile = (path) => {
+    return fs.readFileSync(path, 'utf8');
+}
+
+const checkCredentials = (text, postData) => {
+    const rowData = text.split('\n');
+
+    for (let row = 1; row < rowData.length; row++) {
+
+        const rowColData = rowData[row].split(',');
+
+        if (rowColData[0].trim() == postData.user && rowColData[1].trim() == postData.password) {
+            console.log("login successfull");
+            return true;
+        }
+
+    }
+    console.log("login failed");
+    return false;
+}
+
+const checkSession = (postData) => {
+
+//TODO Validate the SessionID
+
+}
 
 //TODO
 //Read login file from app.js

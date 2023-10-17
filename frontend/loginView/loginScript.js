@@ -44,7 +44,9 @@ formsignup.addEventListener("submit", async (e) => {
 
 
     if (await validateInputsSignUp()) {
-        //Schreibe in login.csv
+        //Fetch POST, write username and password to file on server, create file if not exists
+
+        //Maybe redirect on server instead
         location.href = '/login';
     }
 
@@ -99,18 +101,23 @@ const validateInputsSignUp = async () => {
 //Prüfe Name bei Signup
 async function checkNameSignup() {
 
-    let text = await readLoginFile();
+    //Fetch POST username, return true or false to indicate if username is available or not, if no file exists, return available
 
-    const rowData = text.split('\n');
 
-    for (let row = 1; row < rowData.length; row++) {
 
-        const rowColData = rowData[row].split(',');
 
-        if (rowColData[0].trim() == newusernameValue) {
-            return false;
-        }
-    }
+    /*     let text = await readLoginFile();
+    
+        const rowData = text.split('\n');
+    
+        for (let row = 1; row < rowData.length; row++) {
+    
+            const rowColData = rowData[row].split(',');
+    
+            if (rowColData[0].trim() == newusernameValue) {
+                return false;
+            }
+        } */
 
     return true;
 
@@ -127,11 +134,24 @@ let usernameValue = ""
 let passwordValue = "";
 
 //Automatischer Login durch Session
-(() => {
+( async () => {
 
     const sessionId = sessionStorage.getItem('sessionId');
 
-    if (sessionId > 1000000000000000 && sessionId < 9999999999999999) {
+    //Send sessionId to server, if its in the userfile server redirects to /
+
+    let response = await fetch('/login/checkLogin', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "session": sessionId })
+    })
+
+    response = await response.json();
+    
+    if(response.login == "true"){
         location.href = '/';
     }
 
@@ -144,13 +164,13 @@ formlogin.addEventListener("submit", async (e) => {
     passwordValue = password.value.trim();
     e.preventDefault();
 
+    checkLogin();
 
-
-    if (await checkLogin()) {
+/*     if (await checkLogin()) {
         let session = Math.floor(Math.random() * 9999999999999999) + 1000000000000000;
         sessionStorage.setItem('sessionId', session);
         location.href = '/';
-    }
+    } */
 
     validateInputsLogin();
 
@@ -176,38 +196,22 @@ const validateInputsLogin = () => {
 //Prüfe Login Credentials
 async function checkLogin() {
 
-        return true;
-/*     let text = await readLoginFile();
+    let response = await fetch('/login/checkLogin', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "user": usernameValue, "password": passwordValue })
+    })
 
-    const rowData = text.split('\n');
+    response = await response.json();
 
-    for (let row = 1; row < rowData.length; row++) {
-
-        const rowColData = rowData[row].split(',');
-
-        if (rowColData[0].trim() == usernameValue && rowColData[1].trim() == passwordValue) {
-            console.log("login successfull");
-            return true;
-        }
-
+    if(response.login == "true"){
+        sessionStorage.setItem('sessionId', response.id);
+        location.href = '/';
     }
-    console.log("login failed");
-    return false; */
-
 }
-
-async function readLoginFile() {
-
-    let datei = await fetch("login.txt");
-    let text = await datei.text();
-
-    return text;
-
-}
-
-
-
-
 
 //Error/Success Functions
 function formError(message, element) {
