@@ -113,10 +113,15 @@ const server = http.createServer((req, res) => {
 
                     if (typeof postData.user !== 'undefined') {
                         if (checkCredentials(text, postData)) {
-                            data = JSON.stringify({ "id": uuid(), "login": "true" });
-
-                            //TODO Write uuid into a file. extra file or login....?
-
+                            let id = uuid();
+                            data = JSON.stringify({ "id": id, "login": "true" });
+                            fs.appendFile('./uuids.txt', id, (err) => {
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    console.log("uuid written into file");
+                                }
+                            });
                         } else {
                             data = JSON.stringify({ "login": "false" });
                         }
