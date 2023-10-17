@@ -1,10 +1,27 @@
 
 //Redirect to Login if no Session
-(() => {
+( async () => {
 
     const sessionId = sessionStorage.getItem('sessionId');
     
+    //Hier check if session Id auch wirklich stimmt, call an browser -> Check Session
         if(sessionId == null){
+            location.href = '/login';
+            return;
+        }
+
+        let response = await fetch('/login/checkLogin', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "session": sessionId })
+        })
+    
+        response = await response.json();
+        
+        if(response.login == "false"){
             location.href = '/login';
         }
     

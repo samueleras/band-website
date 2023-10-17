@@ -2,7 +2,7 @@
 
 const http = require('http');
 const fs = require('fs');
-const {v4: uuid} = require('uuid');
+const { v4: uuid } = require('uuid');
 
 const server = http.createServer((req, res) => {
 
@@ -107,26 +107,31 @@ const server = http.createServer((req, res) => {
             req.on('data', (postData) => {
                 postData = JSON.parse(postData);
 
-                let text = readFile("login.txt");
+                try {
+                    let text = readFile("login.txt");
+                    let data = "";
 
-                let data = "";
+                    if (typeof postData.user !== 'undefined') {
+                        if (checkCredentials(text, postData)) {
+                            data = JSON.stringify({ "id": uuid(), "login": "true" });
 
-                if(typeof postData.user !== 'undefined'){
-                    if (checkCredentials(text, postData)) {
-                        data = JSON.stringify({ "id": uuid(), "login": "true" });
+                            //TODO Write uuid into a file. extra file or login....?
 
-                        //TODO Write uuid into a file. extra file or login....?
-
-                    } else {
-                        data = JSON.stringify({ "login": "false" });
+                        } else {
+                            data = JSON.stringify({ "login": "false" });
+                        }
+                    } else if (typeof postData.session !== 'undefined') {
+                        if (checkSession(postData)) {
+                            data = JSON.stringify({ "login": "true" });
+                        } else {
+                            data = JSON.stringify({ "login": "false" });
+                        };
                     }
-                } else if(typeof postData.session !== 'undefined') {
-                    if(checkSession(postData)){
-                        data = JSON.stringify({ "login": "true" });
-                    };
-                }
 
-                res.end(data);
+                    res.end(data);
+                } catch (err) {
+                    console.log(err);
+                }
             });
 
             return;
@@ -138,14 +143,23 @@ const server = http.createServer((req, res) => {
             break;
     }
 
-    fs.readFile(path, (err, data) => {
+    //Funst das?
+    try{
+        let data = readFile(path);
+        res.end(data);
+    } catch (err){
+        console.log(err);
+        res.end();
+    }
+
+/*     fs.readFile(path, (err, data) => {
         if (err) {
             console.log(err);
             res.end();
         } else {
             res.end(data);
         }
-    });
+    }); */
 
 });
 
@@ -154,7 +168,12 @@ server.listen(3000, 'localhost', () => {
 });
 
 const readFile = (path) => {
-    return fs.readFileSync(path, 'utf8');
+    try {
+        return fs.readFileSync(path, 'utf8');
+    } catch (err) {
+        console.log(err);
+        throw err;                                  //Stimmt das so?
+    }
 }
 
 const checkCredentials = (text, postData) => {
@@ -176,7 +195,7 @@ const checkCredentials = (text, postData) => {
 
 const checkSession = (postData) => {
 
-//TODO Validate the SessionID
+    //TODO Validate the SessionID
 
 }
 
