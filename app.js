@@ -155,7 +155,6 @@ const server = http.createServer((req, res) => {
                     for (let row = 1; row < rowData.length; row++) {
 
                         const rowColData = rowData[row].split(',');
-                        console.log("USername: ", postData.username)
 
                         if (rowColData[0].trim() == postData.username) {
                             data = JSON.stringify({ "user": "false" });
@@ -172,7 +171,7 @@ const server = http.createServer((req, res) => {
                     console.log(err);
                 }
             });
-            break;
+            return;
 
         //Create User with valid Signup Credentials
         case '/login/createUser':
@@ -184,7 +183,7 @@ const server = http.createServer((req, res) => {
                     if (err) {
                         console.log(err);
                     } else {
-                        console.log("user written into file");
+                        console.log(`New user ${postData.username} created and saved to file`);
                     }
                 });
             });
@@ -198,15 +197,6 @@ const server = http.createServer((req, res) => {
             res.statusCode = 404;
             break;
     }
-
-    /* //Funst das?
-    try {
-        let data = readFile(path);
-        res.end(data);
-    } catch (err) {
-        console.log(err);
-        res.end();
-    } */
 
     fs.readFile(path, (err, data) => {
         if (err) {
@@ -228,7 +218,7 @@ const readFile = (path) => {
         return fs.readFileSync(path, 'utf8');
     } catch (err) {
         console.log(err);
-        throw err;                                  //Stimmt das so?
+        throw err;
     }
 }
 
@@ -261,8 +251,3 @@ const checkSession = (postData) => {
     }
     return false;
 }
-
-//TODO
-//Read login file from app.js
-//Where to redirect to login of not logged in? From frontend or backend? Form sends directly to backend? Or form submit event is interupted and frontend sends data to backend with post, backend answers, frontend redirects, or backend redirects if correct. Probably backend...
-//Frontend checks with local storage if user is logged in, validates it with backend, otherwise backend redirects to login page if local storage userid doesnt exist in database (bzw file)
