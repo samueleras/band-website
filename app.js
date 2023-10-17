@@ -144,22 +144,22 @@ const server = http.createServer((req, res) => {
     }
 
     //Funst das?
-    try{
+    try {
         let data = readFile(path);
         res.end(data);
-    } catch (err){
+    } catch (err) {
         console.log(err);
         res.end();
     }
 
-/*     fs.readFile(path, (err, data) => {
-        if (err) {
-            console.log(err);
-            res.end();
-        } else {
-            res.end(data);
-        }
-    }); */
+    /*     fs.readFile(path, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.end();
+            } else {
+                res.end(data);
+            }
+        }); */
 
 });
 

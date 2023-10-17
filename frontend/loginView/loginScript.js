@@ -166,15 +166,8 @@ formlogin.addEventListener("submit", async (e) => {
 
     checkLogin();
 
-/*     if (await checkLogin()) {
-        let session = Math.floor(Math.random() * 9999999999999999) + 1000000000000000;
-        sessionStorage.setItem('sessionId', session);
-        location.href = '/';
-    } */
-
     validateInputsLogin();
-
-
+    
 });
 
 //Prüfe INPUTS Login

@@ -55,7 +55,6 @@ searchButton.addEventListener("click", () => alert("Feature not available"));
 
 function toggleMenu() {
 
-
     const visibility = flexContainerNav.getAttribute('data-visible');
 
     if(visibility === "false"){
