@@ -46,8 +46,21 @@ formsignup.addEventListener("submit", async (e) => {
     if (await validateInputsSignUp()) {
         //Fetch POST, write username and password to file on server, create file if not exists
 
-
+/*         let response = await fetch('/login/checkLogin', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "session": sessionId })
+        })
+    
+        response = await response.json();
         
+        if(response.name == "false"){
+            location.href = '/login';
+        } */
+
         location.href = '/login';
     }
 
@@ -104,7 +117,22 @@ async function checkNameSignup() {
 
     //Fetch POST username, return true or false to indicate if username is available or not, if no file exists, return available
 
+    console.log("test");
 
+    let response = await fetch('/login/checkUsername', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "username": newusernameValue })
+    })
+
+    response = await response.json();
+    
+    if(response.user == "false"){
+        return false;
+    }
 
 
     /*     let text = await readLoginFile();

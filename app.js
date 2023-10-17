@@ -140,6 +140,40 @@ const server = http.createServer((req, res) => {
             });
 
             return;
+        case '/login/checkUsername':
+            res.writeHead(200, {
+                "Content-Type": "application/json"
+            });
+
+            req.on('data', (postData) => {
+                postData = JSON.parse(postData);
+
+                try {
+                    let text = readFile("login.txt");
+                    let data = "";
+
+                    const rowData = text.split('\n');
+
+                    for (let row = 1; row < rowData.length; row++) {
+
+                        const rowColData = rowData[row].split(',');
+                        console.log("USername: ", postData.username)
+
+                        if (rowColData[0].trim() == postData.username) {
+                            data = JSON.stringify({ "user": "false" });
+                            res.end(data);
+                            console.log("Username vergeben!");
+                            return;
+                        }
+                    }
+                    data = JSON.stringify({ "user": "true" });
+                    res.end(data);
+                    console.log("Username frei!");
+
+                } catch (err) {
+                    console.log(err);
+                }
+            });
 
         //404 SEITE
         default:
