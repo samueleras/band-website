@@ -115,8 +115,8 @@ const server = http.createServer((req, res) => {
                         if (checkCredentials(text, postData)) {
                             let id = uuid();
                             data = JSON.stringify({ "id": id, "login": "true" });
-                            fs.appendFile('./uuids.txt', id, (err) => {
-                                if(err){
+                            fs.appendFile('./uuids.txt', `${id}\n`, (err) => {
+                                if (err) {
                                     console.log(err);
                                 } else {
                                     console.log("uuid written into file");
@@ -148,23 +148,23 @@ const server = http.createServer((req, res) => {
             break;
     }
 
-    //Funst das?
+    /* //Funst das?
     try {
         let data = readFile(path);
         res.end(data);
     } catch (err) {
         console.log(err);
         res.end();
-    }
+    } */
 
-    /*     fs.readFile(path, (err, data) => {
-            if (err) {
-                console.log(err);
-                res.end();
-            } else {
-                res.end(data);
-            }
-        }); */
+    fs.readFile(path, (err, data) => {
+        if (err) {
+            console.log(err);
+            res.end();
+        } else {
+            res.end(data);
+        }
+    });
 
 });
 
@@ -200,8 +200,15 @@ const checkCredentials = (text, postData) => {
 
 const checkSession = (postData) => {
 
-    //TODO Validate the SessionID
+    const ids = readFile("./uuids.txt");
+    const rowData = ids.split('\n');
 
+    for (let row = 0; row < rowData.length; row++) {
+        if (rowData[row] == postData.session) {
+            return true;
+        }
+    }
+    return false;
 }
 
 //TODO

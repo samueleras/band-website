@@ -46,7 +46,8 @@ formsignup.addEventListener("submit", async (e) => {
     if (await validateInputsSignUp()) {
         //Fetch POST, write username and password to file on server, create file if not exists
 
-        //Maybe redirect on server instead
+
+        
         location.href = '/login';
     }
 
@@ -138,8 +139,7 @@ let passwordValue = "";
 
     const sessionId = sessionStorage.getItem('sessionId');
 
-    //Send sessionId to server, if its in the userfile server redirects to /
-
+    //Send sessionId to server to verify
     let response = await fetch('/login/checkLogin', {
         method: 'POST',
         headers: {
@@ -150,7 +150,7 @@ let passwordValue = "";
     })
 
     response = await response.json();
-    
+
     if(response.login == "true"){
         location.href = '/';
     }
